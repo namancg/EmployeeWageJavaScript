@@ -1,4 +1,4 @@
-//UC7 - to calculate total wage and daily wage
+//UC8 - to calculate total wage and daily wage and store it in map
 const IS_PART_TIME = 1;
 const IS_FULL_TIME = 2;
 const PART_TIME_HOUR = 4;
@@ -25,18 +25,27 @@ function calculateWage(empHrs) {
     return WAGE_PER_HOUR * empHrs;
 }
 let totalEmpHrs = 0;
-let toatlWorkingDays = 0;
+let totalWorkingDays = 0;
 let empDailyWageArr = new Array();
-while (totalEmpHrs <= MAX_HRS_IN_MONTH && toatlWorkingDays < NUM_OF_WORKING_DAYS) {
-    toatlWorkingDays ++;
+let employeeDailyWageMap = new Map();
+while (totalEmpHrs <= MAX_HRS_IN_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS) {
+    totalWorkingDays ++;
     let empCheck = Math.floor(Math.random() * 10) % 3;
     let empHrs = getWorkingHours(empCheck);
     totalEmpHrs += empHrs;
     empDailyWageArr.push(calculateWage(empHrs))
+    employeeDailyWageMap.set(totalWorkingDays,calculateWage(empHrs))
 }
 let EmpWage =calculateWage(totalEmpHrs);
-console.log("EMPLOYEE HOURS IS : "+totalEmpHrs+" hr\nAND TOTAL WORKING DAYS : " + toatlWorkingDays + "\nAND EMPLOYEE WAGE IS : " + EmpWage);
+console.log("EMPLOYEE HOURS IS : "+totalEmpHrs+" hr\nAND TOTAL WORKING DAYS : " + totalWorkingDays + "\nAND EMPLOYEE WAGE IS : " + EmpWage);
 let totalEmpWage = 0;
+
+//MAP
+function totalWages(totalWage,dailyWage)
+{
+    return totalWage+dailyWage
+}
+console.log("Employee wage map totalHours: "+Array.from(employeeDailyWageMap.values()).reduce(totalWages,0))
 
 
 function sum(dailyWage) {
@@ -44,7 +53,7 @@ function sum(dailyWage) {
 }
 empDailyWageArr.forEach(sum);
 console.log("\nCALCULATING TOTAL WAGE BY FOREACH METHOD : ")
-console.log("EMPLOYEE HOURS IS : "+totalEmpHrs+" hr\nAND TOTAL WORKING DAYS : " + toatlWorkingDays + "\nAND EMPLOYEE WAGE IS : " + totalEmpWage);
+console.log("EMPLOYEE HOURS IS : "+totalEmpHrs+" hr\nAND TOTAL WORKING DAYS : " + totalWorkingDays + "\nAND EMPLOYEE WAGE IS : " + totalEmpWage);
 
 
 function totalWages(totalWage, dailyWage) {
