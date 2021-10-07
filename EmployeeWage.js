@@ -29,6 +29,7 @@ let totalWorkingDays = 0;
 let empDailyWageArr = new Array();
 let employeeDailyWageMap = new Map();
 let empDailyHrsMap = new Map();
+let empDailyHrsAndWageArray = new Array();
 while (totalEmpHrs <= MAX_HRS_IN_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS) {
     totalWorkingDays ++;
     let empCheck = Math.floor(Math.random() * 10) % 3;
@@ -36,6 +37,15 @@ while (totalEmpHrs <= MAX_HRS_IN_MONTH && totalWorkingDays < NUM_OF_WORKING_DAYS
     totalEmpHrs += empHrs;
     empDailyWageArr.push(calculateWage(empHrs))
     employeeDailyWageMap.set(totalWorkingDays,calculateWage(empHrs))
+    empDailyHrsAndWageArray.push({
+        dayNum: totalWorkingDays,
+        dailyHours: empHrs,
+        dailyWage: calculateWage(empHrs),
+        toString() {
+            return '\nDay: '+this.dayNum+' => Working Hours: '+this.dailyHours +
+                    ' And daily wage: '+this.dailyWage;
+        }
+    })
 }
 let EmpWage =calculateWage(totalEmpHrs);
 console.log("EMPLOYEE HOURS IS : "+totalEmpHrs+" hr\nAND TOTAL WORKING DAYS : " + totalWorkingDays + "\nAND EMPLOYEE WAGE IS : " + EmpWage);
@@ -129,3 +139,5 @@ empDailyHrsMap.forEach((value, key, map) => {
 console.log("Full working days: "+ fullWorkingDays);
 console.log("Part working days: "+ partWorkingDays);
 console.log("Non working days: "+ nonWorkingDays);
+
+console.log("Showing daily hours and wage: "+empDailyHrsAndWageArray);
